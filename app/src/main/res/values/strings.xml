@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">First_Try_Lab2</string>
+    <string name="product_Text_View">Product Type</string>
+    <string name="Total_Text_View">Total</string>
+    <string name="one_btn">1</string>
+    <string name="two_btn">2</string>
+    <string name="three_btn">3</string>
+    <string name="four_btn">4</string>
+    <string name="five_btn">5</string>
+    <string name="six_btn">6</string>
+    <string name="seven_btn">7</string>
+    <string name="eight_btn">8</string>
+    <string name="nine_btn">9</string>
+    <string name="zero_btn">0</string>
+    <string name="clear_btn">C</string>
+    <string name="quantity_text">Quantity</string>
+</resources>
