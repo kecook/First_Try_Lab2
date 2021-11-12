@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Adapter;
 
 import java.util.ArrayList;
 
@@ -34,31 +36,28 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
     TextView quantity;
     Calculation model;
     String calcualtion_string = "";
+    int index =0;
 
 
 
     ListView inventory_list;
     String[] listOfItems;
-//    ArrayList<String> shopInventory;
 
-//    ArrayList<ProductModel>product = new ArrayList<ProductModel>(4){
-////            product.add.ProductModel
-//            new ProductModel("pants",10,20.99),
-//            new ProductModel("Shirt", 20, 10.99),
-//            new ProductModel("Shoes", 10, 40.99),
-//                    new ProductModel("Hat", 15, 14.99)
-//            };
  CustomeAdapter adapter;
+ double selectedPrice;
+ int selectedQtn;
+ StoreManager productDetail = new StoreManager();//create obj for storeManager where inicalized the class product
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        ArrayList<StoreManager> productDetail = new ArrayList<StoreManager>();
+
         model = new Calculation();
         listOfItems = new String[]{"pants","Shirts","Shoes", "Hats"};
-        StoreManager productDetail = new StoreManager();//create obj for storeManager where inicalized the class product
+
 
         one_btn = findViewById(R.id.one_btn);
         two_btn = findViewById(R.id.two_btn);
@@ -91,35 +90,64 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
         clear_btn.setOnClickListener(this);
         buy_btn.setOnClickListener(this);
 
-
-//        Toast.makeText(getApplicationContext(),"The selected plant is " + productDetail  ,Toast.LENGTH_LONG).show();
-
-//        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.inventory_list,R.id.text_in_row,productDetail);
+//        inventory_list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Object listItem = inventory_list.getItemAtPosition(position);
+//                Toast.makeText(getApplicationContext(),"Click ListItem Number"+listItem.toString(), Toast.LENGTH_LONG).show();
+//
+////                StoreManager selectedProductFromList = inventory_list.getItemAtPosition(position);
+////                selected_product.setText(selectedProductFromList.toString());
+////                Toast.makeText(getApplicationContext(),"Select a plant " + inventory_list.getItemAtPosition(position)  ,Toast.LENGTH_LONG).show();
+//            }
         adapter = new CustomeAdapter(getApplicationContext(),productDetail.myProduct);
         inventory_list.setAdapter(adapter);
-
-//
+    inventory_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        index = position;
+     String selectedItem = productDetail.myProduct.get(position).name;
+     selectedPrice = productDetail.myProduct.get(position).price;
+     selectedQtn = productDetail.myProduct.get(position).qnt;
+     selected_product.setText(selectedItem);
     }
+    });
+
+    }
+
+
         @Override
     public void onClick(View view){
         if (view.getId() == R.id.clear_btn){
             Log.d("Calcualtor","Clear clicked");    // C
             quantity.setText("");
+            total_amount.setText("");
+            selected_product.setText("");
             calcualtion_string = "";
             model.clear();
         }
-//        else if (view.getId() == R.id.buy_btn){
-//            Log.d("Calcualtor","equal  clicked"); // =
-//            int r = model.calc();
-//            calcualtion_string = calcualtion_string + " = " + r;
-//            result.setText(calcualtion_string );
-//            if (model.mode == 2) {
-//                history_text.setText(model.getHistory());
-//            }
-//        }
+        else if (view.getId() == R.id.buy_btn){
+            Log.d("buy button clicked","hello");
+            String temp = quantity.getText().toString();
+            if(temp.isEmpty()){
+                Toast.makeText(getApplicationContext(),"All fields required",Toast.LENGTH_LONG).show();
+            }else {
+                int qntEntered = Integer.parseInt(temp);
+                if (qntEntered > selectedQtn) {
+                    Toast.makeText(getApplicationContext(), "Not enough stock", Toast.LENGTH_LONG).show();
+                } else {
+                    double result = model.totalAmount(qntEntered, selectedPrice);
+                    total_amount.setText(result + "");
+                    int newQnt = selectedQtn - qntEntered;
+                    productDetail.myProduct.get(index).setQnt(newQnt);
+                    adapter.notifyDataSetChanged();
+//                    inventory_list(index)=selectedQtn;
+                }
+            }
+     }
         else {
             String v = ((Button)view).getText().toString(); // 1 2 + -
-            calcualtion_string = calcualtion_string + "  " + v;
+            calcualtion_string = calcualtion_string + v;
             quantity.setText(calcualtion_string);
             model.push(v);
             Log.d("Calcualtor","number or Op clicked"); // 2 + 3 + 4 - 5

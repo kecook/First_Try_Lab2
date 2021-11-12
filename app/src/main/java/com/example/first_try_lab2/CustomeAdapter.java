@@ -12,10 +12,13 @@ import java.util.List;
 
 public class CustomeAdapter extends BaseAdapter {
     Context myContext;
+//    Context list_activity_context;
     List<ProductModel> myList;
     LayoutInflater inflater;
+
     CustomeAdapter(Context myContext, List myList){
         this.myContext = myContext;
+
         this.myList= myList;
         inflater=(LayoutInflater.from(myContext));
 
@@ -39,9 +42,15 @@ public class CustomeAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.inventory_list,null);
+         TextView name = (TextView)convertView.findViewById(R.id.product_name);
+        TextView price = (TextView)convertView.findViewById(R.id.product_price);
+         TextView qnt = (TextView)convertView.findViewById(R.id.product_qnt);
 
-        TextView txtView = (TextView)convertView.findViewById(R.id.qnt_name);
-        txtView.setText(myList.get(position).name);
+        name.setText(myList.get(position).name);
+       price.setText(myList.get(position).price+"");
+        qnt.setText(myList.get(position).qnt+"");
+
+
         return convertView;
     }
 }

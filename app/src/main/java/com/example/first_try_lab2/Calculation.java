@@ -15,12 +15,14 @@ public void push(String valueToPush){
 }
 
 
+public double totalAmount(int prodQnt, double prodPrice){
+    double total = prodQnt * prodPrice;
+    return total;
 
-//    public String getOneExp(){
-//        return oneExp;
-//    }
+}
 
     public void clear(){
         operators_oprands_list.clear();
     }
+
 }

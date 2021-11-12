@@ -14,5 +14,9 @@ public class ProductModel {
         this.price = price;
     }
 
+    public void setQnt(int qnt){
+        this.qnt = qnt;
+    }
+
 //  ArrayList<String> product =
 }

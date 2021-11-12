@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:text="@string/two_btn"
+            android:text="2"
             android:layout_weight="1"
             android:textColor="@color/black"
             style="?android:attr/buttonBarButtonStyle"/>
@@ -186,7 +186,7 @@
         android:id="@+id/quantity"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="@string/quantity_text"
+        android:text=""
         />
 <ListView
     android:id="@+id/inventory_list"

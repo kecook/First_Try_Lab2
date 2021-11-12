@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="50dp">
-
+<TableRow>
     <TextView
-        android:id="@+id/qnt_name"
+        android:id="@+id/product_name"
         android:text=""
         android:textSize="20sp"
         android:textColor="@color/purple_200"
@@ -13,4 +13,21 @@
         android:layout_height="wrap_content"/>
 
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/product_price"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/purple_200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</TableRow>
+<TableRow>
+    <TextView
+        android:id="@+id/product_qnt"
+        android:text=""
+        android:textSize="20sp"
+        android:textColor="@color/purple_200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</TableRow>
+</TableLayout>
