@@ -181,6 +181,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buy" />
+        <Button
+            android:id="@+id/manager_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/manager" />
     </LinearLayout>
     <TextView
         android:id="@+id/quantity"
@@ -192,6 +197,8 @@
     android:id="@+id/inventory_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
+
+
 
 
 </LinearLayout>

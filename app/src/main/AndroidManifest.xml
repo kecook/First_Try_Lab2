@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.First_Try_Lab2">
         <activity
+            android:name=".HistoryPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManagerPanelActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

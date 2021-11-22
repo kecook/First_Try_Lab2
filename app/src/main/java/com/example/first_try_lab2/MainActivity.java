@@ -1,21 +1,23 @@
 package com.example.first_try_lab2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Adapter;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity<onClick> extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,6 +33,7 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
     Button clear_btn;
     Button zero_btn;
     Button buy_btn;
+    Button manager_btn;
     TextView selected_product;
     TextView total_amount;
     TextView quantity;
@@ -43,20 +46,25 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
     ListView inventory_list;
     String[] listOfItems;
 
- CustomeAdapter adapter;
- double selectedPrice;
- int selectedQtn;
- StoreManager productDetail = new StoreManager();//create obj for storeManager where inicalized the class product
+    CustomeAdapter adapter;
+    double selectedPrice;
+    int selectedQtn;
+    StoreManager productDetail = new StoreManager();//create obj for storeManager where inicalized the class product
+    ArrayList<HistoryModel> myHistory = new ArrayList<>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        history_table= findViewById(R.id.purHistory);
 
 
         model = new Calculation();
         listOfItems = new String[]{"pants","Shirts","Shoes", "Hats"};
+//        history_table.setLayoutManager(new LinearLayoutManager(this));
+
 
 
         one_btn = findViewById(R.id.one_btn);
@@ -75,6 +83,7 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
         total_amount = findViewById(R.id.total_amount);
         quantity = findViewById(R.id.quantity);
         inventory_list = findViewById(R.id.inventory_list);
+        manager_btn = findViewById(R.id.manager_btn);
 
 
         one_btn.setOnClickListener(this);
@@ -89,6 +98,7 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
         zero_btn.setOnClickListener(this);
         clear_btn.setOnClickListener(this);
         buy_btn.setOnClickListener(this);
+        manager_btn.setOnClickListener(this);
 
 //        inventory_list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
@@ -142,10 +152,20 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
                     productDetail.myProduct.get(index).setQnt(newQnt);
                     adapter.notifyDataSetChanged();
 //                    inventory_list(index)=selectedQtn;
+                    String tempProductName = productDetail.myProduct.get(index).name;
+                    HistoryModel history = new HistoryModel(tempProductName, qntEntered, result, (new Date()).toString());
+                    myHistory.add(history);
                 }
             }
-     }
-        else {
+        } else if (view.getId() == R.id.manager_btn) {
+            Toast.makeText(getApplicationContext(),"hello", Toast.LENGTH_LONG).show();
+            Intent myIntent = new Intent(getApplicationContext(), ManagerPanelActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("history list", myHistory);
+            myIntent.putExtras(bundle);
+
+            startActivity(myIntent);
+     } else {
             String v = ((Button)view).getText().toString(); // 1 2 + -
             calcualtion_string = calcualtion_string + v;
             quantity.setText(calcualtion_string);
@@ -155,4 +175,30 @@ public class MainActivity<onClick> extends AppCompatActivity implements View.OnC
         }
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.manager_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+         super.onOptionsItemSelected(item);
+         switch (item.getItemId()){
+             case R.id.menu_History:{
+                 break;
+             }
+             case R.id.menu_Inventory:{
+                 break;
+             }
+         }
+         return true;
+    }
+
+//    private void openHistoryActivity(){
+//        Intent toListActivity = new Intent(this, ListActivity.class);
+//        toListActivity.putParcelableArrayListExtra();
+//    }
 }

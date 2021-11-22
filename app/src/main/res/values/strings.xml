@@ -14,4 +14,13 @@
     <string name="zero_btn">0</string>
     <string name="clear_btn">C</string>
     <string name="quantity_text">Quantity</string>
+    <string name="history">History</string>
+    <string name="menu_inventory">Inventory</string>
+    <string name="manager">Manager</string>
+    <string name="title_activity_manager_view">ManagerView</string>
+<string name="restock">Restock</string>
+    
+
+    
+    <string name="title_activity_manager_btn_view">ManagerBtnView</string>
 </resources>
